@@ -10,7 +10,7 @@ Take home test for mosaic interview
   The API will return all results if you do not include the page parameter. If you do include page parameter, it will include the results numbered (page-1)*10 - (page*10) results.
   E.g. page = 2 will return results 10 - 19., page = 100 will return results 990-999. If there are no results in the requested page, the api will return an empty array.
 
-5. Patch route (for updating projects) is partially implemented, but all it does is print out the request body.
+5. Patch route `PATCH localhost:2600/api/update/:id` (for updating projects) is partially implemented, but all it does is print out the request body.
 
 ## Addendum:
 I really struggled to import the json file into the database. I chose to use the SQL library that I use on my current job, which I'm quite familiar with. 
