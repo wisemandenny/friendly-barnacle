@@ -17,7 +17,7 @@ I really struggled to import the json file into the database. I chose to use the
 The problem was that at my work, the databases already exist, so it is straightforward to connect to them, perform migrations, queries, etc. In this scenario,
 I needed to connect to a database server, create a database, and then run migrations and seeds. I was unable to connect to the DB server without having first created
 the database. Unfortunately I spent 1 hour trying to solve this issue, so when I finally gave up and decided to just hold the whole JSON file in memory, I wasn't able
-to flesh out the features to the quality I'd be comfortable with.
+to flesh out the features to the quality I'd be comfortable with. If I had to do this test again, I would probably write a script that converts the JSON file into SQL Insert Statements, and then run a postgreSQL database server in a docker container. My database library could then connect to the running server, and execute the prepared Insert Statements, prefaced by `CREATE DATABASE mosaic-api; USE mosaic-api;`. Once this was done, I would have much more time to create the routes themselves.
 
 ## Scaling:
 If I planned to scale this up to serve thousands of users, I would first resolve this DB issue and actually use a SQL database. I would then use a SQL connection pool
