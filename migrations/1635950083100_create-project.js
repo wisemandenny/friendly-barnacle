@@ -3,9 +3,9 @@ module.exports = {
 	'  `id` int(11) NOT NULL AUTO_INCREMENT,\n' +
 	' `geographicDistrict` int(11) DEFAULT NULL,\n' +
 	' `buildingIdentifier` varchar(4) NOT NULL DEFAULT \'\',\n' +
-	' `schoolName` varchar(64) NOT NULL DEFAULT \'\'\,n' +
+	' `schoolName` varchar(64) NOT NULL DEFAULT \'\'\,\n' +
 	' `type` varchar(32) NOT NULL DEFAULT \'\',\n' +
-	' `description` mediumtext NOT NULL DEFAULT \'\',\n' +
+	' `description` varchar(128) NOT NULL DEFAULT \'\',\n' +
 	' `phaseName` varchar(32) NOT NULL DEFAULT \'\',\n' +
 	' `statusName` varchar(32) NOT NULL DEFAULT \'\',\n' +
 	'  `actualStartDate` timestamp NULL DEFAULT NULL,\n' +
