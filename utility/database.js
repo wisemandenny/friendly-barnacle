@@ -14,19 +14,10 @@ module.exports = {
     execute: conn.execute,
     run: async (query) => {
         try {
-            const result = await conn.promise().query(query);
-            console.log(result);
+            const [result] = await conn.promise().query(query);
             return result;
         } catch (e) {
             console.error(query);
-            throw e;
         }
     },
-    // init: async () => {
-    //     const conn = await pool.getConnection();
-    //     console.log(conn);
-    //     await conn.query({
-    //         sql: 'CREATE DATABASE `mosaic-api`;'
-    //     })
-    // }
 }
