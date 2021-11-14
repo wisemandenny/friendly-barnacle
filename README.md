@@ -3,6 +3,7 @@ Take home test for mosaic interview
 
 ## Setup instructions:
 1. Clone the repository
+2. run the docker command `docker run --name mosaicdb -e MYSQL_USER=user -e MYSQL_PASSWORD=password -e MYSQL_DATABASE=mosaic-api -e MYSQL_RANDOM_ROOT_PASSWORD=yes -p 3306:3306 -d docker.io/library/mariadb:latest`. This initializes the database in a container
 2. Navigate to the root directory of the repository
 3. Run the command `node app.js`. The console will output the port the API is listening on (should be 2600).
 4. Search routes are accesible from `GET localhost:2600/api/search/name/:name/:page?`, `GET localhost:2600/api/search/description/:description/:page?`, or `localhost:2600/api/seach/name/:name/description/:description/:page?`.
