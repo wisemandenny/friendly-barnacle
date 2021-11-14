@@ -9,7 +9,8 @@
   "scripts": {
     "test": "test",
     "migrations": "node migrations.js up",
-    "seeds": "node utility/seeds.js",
+    "seeds": "node migrations.js up && node utility/seeds.js",
+    "dev": "nodemon app.js",
     "start": "node app.js"
   },
   "author": "",
