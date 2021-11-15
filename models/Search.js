@@ -2,9 +2,16 @@ const db = require('../utility/database');
 const {sanitizeNumber, formatDate} = require('../utility/util');
 require('dotenv').config();
 class Search {
-	constructor(searchQuery, filters) {
+	constructor({query, filters, id}) {
 		// need to do SQL injection protection here
-		this.searchQuery = searchQuery;
+		if (id) {
+			this.id = id;
+			this.sqlQuery = {
+				sql: `SELECT * FROM \`Project\` WHERE id=${id};`
+			}
+			return;
+		}
+		this.searchQuery = query;
 		this.hasFilters = Object.keys(filters).length > 0;
 		if (this.hasFilters) {
 			this.filters = {
@@ -106,6 +113,10 @@ class Search {
 
 module.exports = {
 	findByQuery: (query, filters = {}) => {
-		return new Search(query, filters);
+		return new Search({query, filters});
+	},
+	findById: (id) => {
+		return new Search({id});
+		
 	}
 }
