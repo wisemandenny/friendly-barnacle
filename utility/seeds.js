@@ -1,7 +1,7 @@
 const fs = require('fs');
 const JSONStream = require('JSONStream');
 const es = require('event-stream');
-const {santizeString, santizeNumber, formatDate} = require('./util')
+const {sanitizeString, sanitizeNumber, formatDate} = require('./util')
 const db = require('./database.js');
 require('dotenv').config();
 
@@ -30,7 +30,7 @@ const insertDsfs = async function (projectId, dsfField) {
 
 const insertProject = async function(project) {
 	const p = {
-		geographicDistrict: santizeNumber(project["Project Geographic District"]),
+		geographicDistrict: sanitizeNumber(project["Project Geographic District"]),
 		buildingIdentifier: sanitizeString(project["Project Building Identifier"]),
 		schoolName: sanitizeString(project["Project School Name"]),
 		type: sanitizeString(project["Project Type"]),
@@ -40,14 +40,14 @@ const insertProject = async function(project) {
 		actualStartDate: formatDate(project["Project Phase Actual Start Date"]),
 		plannedEndDate: formatDate(project["Project Phase Planned End Date"]),
 		actualEndDate: formatDate(project["Project Phase Actual End Date"]),
-		budgetAmount: santizeNumber(project["Project Budget Amount"]),
+		budgetAmount: sanitizeNumber(project["Project Budget Amount"]),
 		phaseCostEstimate: sanitizeNumber(project["Final Estimate of Actual Costs Through End of Phase Amount"]),
-		phaseCostActual: santizeNumber(project["Total Phase Actual Spending Amount"]),
+		phaseCostActual: sanitizeNumber(project["Total Phase Actual Spending Amount"]),
 	};
 	const tuples = Object.entries(p).filter(([key, value]) => value && value !== 'Invalid date');
 	const keys = tuples.map(([k, v]) => k).join(', ');
 	const values = tuples.map(([k, v]) => `'${v}'`).join(', ');
-	const [result] = await db.run(
+	const result = await db.run(
 		{
 			sql: `INSERT INTO \`Project\` (${keys}) VALUES (${values});`
 	});

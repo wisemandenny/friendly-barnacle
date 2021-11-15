@@ -1,7 +1,7 @@
 const mysql = require('mysql2')
 require('dotenv').config();
 
-const conn = mysql.createConnection({
+const pool = mysql.createPoolPromise({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
@@ -10,13 +10,16 @@ const conn = mysql.createConnection({
 });
 
 module.exports = {
-    query: conn.query,
-    execute: conn.execute,
+    query: pool.query,
+    execute: pool.execute,
     run: async (query) => {
+        const conn = await pool.getConnection();
         try {
-            const [result] = await conn.promise().query(query);
+            const [result] = await conn.query(query);
+            await conn.destroy();
             return result;
         } catch (e) {
+            await conn.destroy();
             console.error(query);
         }
     },
