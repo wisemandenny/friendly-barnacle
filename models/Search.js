@@ -5,9 +5,11 @@ class Search {
 	constructor({query, filters, id}) {
 		// need to do SQL injection protection here
 		if (id) {
-			this.id = id;
+			const idNumber = sanitizeNumber(id);
+			if(!idNumber) return;
+			this.id = idNumber;
 			this.sqlQuery = {
-				sql: `SELECT * FROM \`Project\` WHERE id=${id};`
+				sql: `SELECT * FROM \`Project\` WHERE id=${idNumber}`
 			}
 			return;
 		}
@@ -59,7 +61,7 @@ class Search {
 			clause.push(`\`${name}\` > '${after}'`);
 		}
 		if (equals) {
-			clause.push(`\`${name}\`='${equals}'`);
+			clause.push(`\`${name}\` = '${equals}'`);
 		}
 		return`(${clause.join(' AND ')})`;
 	}
@@ -85,8 +87,6 @@ class Search {
 		[{actualStartDate}, {plannedEndDate}, {actualEndDate}].forEach((date) => whereClause.push(this.generateDateFilterClause(date)));
 		[{budgetAmount}, {phaseCostEstimate}, {phaseCostActual}].forEach((cost) => whereClause.push(this.generateCostFilterClause(cost)));
 		return `AND (${whereClause.filter(c => c).join(' AND ')}) `;
-
-
 	}
 
 	generateSQLQuery() {
@@ -97,6 +97,7 @@ class Search {
 		} else {
 			this.sqlQuery = {sql: searchQuery};
 		}
+		
 	}
 
 	async executeSQLQuery() {
@@ -104,10 +105,10 @@ class Search {
 		return await db.run(this.sqlQuery);
 	}
 
-	 paginate(page = 1) {
+	paginate(page = 1) {
 		const {sql} = this.sqlQuery;
 		const paginationQuery = `ORDER BY id LIMIT ${process.env.PAGE_SIZE} OFFSET ${process.env.PAGE_SIZE * (page - 1)}`
-		this.sqlQuery.sql = sql.concat(paginationQuery);
+		this.sqlQuery.sql = sql.concat(' ', paginationQuery);
 	}
 }
 
