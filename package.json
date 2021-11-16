@@ -8,10 +8,9 @@
   },
   "scripts": {
     "test": "test",
-    "migrations": "node migrations.js up",
-    "seeds": "node utility/seeds.js",
-    "dev": "nodemon app.js",
-    "start": "node app.js"
+    "seeds": "node src/utility/seeds.js",
+    "dev": "nodemon src/app.js",
+    "start": "node src/app.js"
   },
   "author": "",
   "license": "ISC",

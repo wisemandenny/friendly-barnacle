@@ -1,8 +1,8 @@
 const fs = require('fs');
 const JSONStream = require('JSONStream');
 const es = require('event-stream');
-const projectService = require('../project.service');
-const db = require('../database/database');
+const projectService = require('../services/project.service');
+const db = require('./database');
 
 require('dotenv').config();
 

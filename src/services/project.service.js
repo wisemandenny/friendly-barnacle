@@ -1,8 +1,9 @@
-const db = require('./database/database');
-const {formatDate} = require('./utility/util');
+const db = require('../utility/database');
+const {formatDate} = require('../utility/util');
 const {Project, DSF} = db;
 const {Op} = db.Sequelize;
 require('dotenv').config();
+
 exports.create = async (project) => {
 	const newProject = await Project.create({
 		geographicDistrict: project['Project Geographic District'],
@@ -33,8 +34,6 @@ exports.create = async (project) => {
 		});
 	}
 };
-
-//mdn String;
 
 exports.search = async (query, filters, page) => {
 	const hasFilters = filters && Object.entries(filters).length > 0;
@@ -77,5 +76,20 @@ exports.search = async (query, filters, page) => {
 		},
 		...pagination,
 		order: [['id', 'ASC']],
+	});
+}
+
+exports.update = async (id, rawActualStartDate, rawPhaseCostActual) => {
+	const actualStartDate = rawActualStartDate ? formatDate(rawActualStartDate) : undefined;
+	const phaseCostActual = rawPhaseCostActual ? Number(rawPhaseCostActual) : undefined;
+	const test = {...{actualStartDate, phaseCostActual}};
+	return await Project.update(
+		{...{actualStartDate, phaseCostActual}},
+		{
+			where: {
+				id: {
+					[Op.eq]: id
+				}
+			}
 	});
 }

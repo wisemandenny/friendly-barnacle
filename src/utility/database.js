@@ -16,6 +16,6 @@ const db = {
     Sequelize,
     sequelize,
 };
-db.DSF = require('./DSF.model')(sequelize, Sequelize);
-db.Project = require('./Project.model')(sequelize, Sequelize);
+db.DSF = require('../models/DSF.model')(sequelize, Sequelize);
+db.Project = require('../models/Project.model')(sequelize, Sequelize);
 module.exports = db;

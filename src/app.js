@@ -1,7 +1,7 @@
 const express = require('express');
-const db = require('./database/database');
-const projectService = require('./project.service');
-// const Search = require('./models/Search');
+const db = require('./utility/database');
+const projectService = require('./services/project.service');
+const { formatDate } = require('./utility/util');
 // const Update = require('./models/Update');
 const app = express();
 
@@ -19,23 +19,15 @@ app.get('/search', async (req, res) => {
 
 app.patch('/update', async (req, res) => {
 	try {
-		const { id, values } = req.body;
-		if (!values) {
+		const { id, actualStartDate, phaseCostActual } = req.body;
+		if (!id || isNaN(id) || (formatDate && !formatDate(actualStartDate)) || (phaseCostActual && isNaN(phaseCostActual))) {
 			res.status(400).end();
 		}
-		const search = Search.findById(id);
-		const existingProject = await search.executeSQLQuery();
-		if (!existingProject) {
-			res.status(404).end();
-		}
-		const update = Update.updateById(id, values);
-		const {affectedRows} = await update.executeSQLQuery();
-		const updatedProject = await search.executeSQLQuery();
+		const existingProject = await db.sequelize.models.Project.findByPk(Number(id));
+		await projectService.update(id, actualStartDate, phaseCostActual);
+		const updatedProject = await db.sequelize.models.Project.findByPk(Number(id));
 		res.json({old: existingProject, updated: updatedProject});
 
-		// check it's a valid ID
-			// if not return 404
-		// else update and return updated record
 	} catch (e) {
 		console.error(e);
 		res.status(500).end();
