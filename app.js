@@ -1,11 +1,10 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const db = require('../utility/database');
 const Search = require('./models/Search');
 const Update = require('./models/Update');
 const app = express();
 
-app.use(bodyParser.json());
-
+app.use(express.json());
 app.get('/search', async (req, res) => {
 	try {
 		const { query, filters, page} = req.query;

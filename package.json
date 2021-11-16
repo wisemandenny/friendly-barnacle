@@ -9,7 +9,7 @@
   "scripts": {
     "test": "test",
     "migrations": "node migrations.js up",
-    "seeds": "node migrations.js up && node utility/seeds.js",
+    "seeds": "node utility/seeds.js",
     "dev": "nodemon app.js",
     "start": "node app.js"
   },
@@ -17,7 +17,6 @@
   "license": "ISC",
   "dependencies": {
     "JSONStream": "^1.3.5",
-    "body-parser": "^1.19.0",
     "dotenv": "^10.0.0",
     "event-stream": "^4.0.1",
     "express": "^4.17.1",
@@ -27,6 +26,7 @@
     "mysql-migrations": "^1.0.7",
     "mysql2": "^2.3.2",
     "nodemon": "^2.0.14",
+    "sequelize": "^6.9.0",
     "supertest": "^6.1.6"
   }
 }

@@ -9,8 +9,9 @@ const sanitizeNumber = function (number) {
 }
 
 const formatDate = function (date) {
-	const cleanDate = moment(date, 'MM/DD/YYYY').format("YYYY-MM-DD HH:mm:ss");
-	return cleanDate !== 'Invalid date' && cleanDate;
+	if (!date) return null;
+	const cleanDate = moment(date, 'MM/DD/YYYY').format("YYYY-MM-DD");
+	return cleanDate !== 'Invalid date' ? cleanDate : null;
 }
 
 module.exports = {
