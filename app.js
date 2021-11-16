@@ -1,19 +1,15 @@
 const express = require('express');
-const db = require('../utility/database');
-const Search = require('./models/Search');
-const Update = require('./models/Update');
+const db = require('./database/database');
+const projectService = require('./project.service');
+// const Search = require('./models/Search');
+// const Update = require('./models/Update');
 const app = express();
 
 app.use(express.json());
 app.get('/search', async (req, res) => {
 	try {
 		const { query, filters, page} = req.query;
-		// validate the query params (skip for demo api)
-		const search = Search.findByQuery(query, filters)
-		if (page) {
-			search.paginate(page);
-		}
-		const results = await search.executeSQLQuery();
+		const results = await projectService.search(query, filters, page);
 		res.json(results);
 	} catch (e) {
 		console.error(e);

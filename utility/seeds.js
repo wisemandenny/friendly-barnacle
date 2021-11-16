@@ -1,7 +1,7 @@
 const fs = require('fs');
 const JSONStream = require('JSONStream');
 const es = require('event-stream');
-const service = require('../app.service');
+const projectService = require('../project.service');
 const db = require('../database/database');
 
 require('dotenv').config();
@@ -20,7 +20,7 @@ const setup = async function() {
 	const stream = getStream();
 	stream.pipe(es.map(async function (project) {
 		try {
-			await service.createProject(project);
+			await projectService.create(project);
 		} catch (e) {
 			console.error(e);
 		}

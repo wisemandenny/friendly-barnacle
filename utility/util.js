@@ -10,7 +10,7 @@ const sanitizeNumber = function (number) {
 
 const formatDate = function (date) {
 	if (!date) return null;
-	const cleanDate = moment(date, 'MM/DD/YYYY').format("YYYY-MM-DD");
+	const cleanDate = moment(date, 'MM/DD/YYYY').format('YYYY-MM-DD');
 	return cleanDate !== 'Invalid date' ? cleanDate : null;
 }
 
