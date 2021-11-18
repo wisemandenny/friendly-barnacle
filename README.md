@@ -29,8 +29,3 @@ This project uses Express.js, MySQL with Sequelize ORM, and jest for testing. Th
 }
 ```
 You must include a valid ID, and at least one of the other two parameters for the update to be valid. If it isn't valid, it will return a 400 error. If it is valid, it will return a JSON object with the old record and the updated record.
-## Scaling:
-If I planned to scale this up to serve thousands of users, I would use a simple queue service such as AWS SQS to handle each request to the api, so that the API could process and respond to a surge in 
-requests, and then dispatch them to the API at the speed that the API can handle them. I would also implement a REDIS cache in order to cache frequently requested data.
-For example, I imagine a frequent request would be searching all projects that contain "New York" or "Brooklyn" or other city names in the description field. A redis cache
-could be configured to return the relevant fields based on city names. I might also use a tool like Cockroach DB to implement intelligent DB scaling. I would also flesh out the tests so that they actually test the project (I'd probably do this first).
