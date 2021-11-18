@@ -1,4 +1,3 @@
-# mosaic-tht
 This project uses Express.js, MySQL with Sequelize ORM, and jest for testing. The database server runs in a docker container. It supports importing a dataset from a json file, and then the api can search, filter, and update data from that dataset.. The test suite currently tests a previous version of the API, written before I added Sequelize ORM to the project. 
 
 ## Setup instructions:
