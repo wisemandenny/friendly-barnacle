@@ -7,7 +7,7 @@ const db = require('./database');
 require('dotenv').config();
 
 const getStream = function () {
-	const stream = fs.createReadStream(`./utility/${process.env.JSON_FILENAME}`)
+	const stream = fs.createReadStream(`src/utility/${process.env.JSON_FILENAME}`)
 	const parser = JSONStream.parse('*');
 	return stream.pipe(parser);
 }

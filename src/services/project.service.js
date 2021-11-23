@@ -79,6 +79,23 @@ exports.search = async (query, filters, page) => {
 	});
 }
 
+exports.findSimilar = async (id, params) => {
+	const foundProject = await Project.findByPk(id);
+	if (!foundProject) throw new Error(`Can't find project with id ${id}.`);
+	const operator = params.operand === 'gte' ? [Op.gte] : [Op.lte];
+
+	return await Project.findAll({
+		where: {
+			geographicDistrict: foundProject.geographicDistrict,
+			phaseCostEstimate: {
+				operand: {
+						[operator]: params.coefficient * foundProject.phaseCostActual,
+				}
+			}
+		}
+	});
+};
+
 exports.update = async (id, rawActualStartDate, rawPhaseCostActual) => {
 	const actualStartDate = rawActualStartDate ? formatDate(rawActualStartDate) : undefined;
 	const phaseCostActual = rawPhaseCostActual ? Number(rawPhaseCostActual) : undefined;
@@ -93,3 +110,25 @@ exports.update = async (id, rawActualStartDate, rawPhaseCostActual) => {
 			}
 	});
 }
+
+
+exports.updateBulk = async (values, defaults) => {
+	const projectsToUpdate = values.map((value) => ({...defaults, ...value}));
+	const updateQueries = projectsToUpdate.map((project) => {
+		return Project.update(
+			project,
+			{
+				where: {
+					id: project.id,
+				}
+			}
+		)
+	});
+
+	await Promise.all(updateQueries);
+	return await Project.findAll({
+		where: {
+			id: values.map((project) => project.id)
+		}
+	});
+};
