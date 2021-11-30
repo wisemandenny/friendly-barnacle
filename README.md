@@ -1,8 +1,8 @@
-This project uses Express.js, MySQL with Sequelize ORM, and jest for testing. The database server runs in a docker container. It supports importing a dataset from a json file, and then the api can search, filter, and update data from that dataset.. The test suite currently tests a previous version of the API, written before I added Sequelize ORM to the project. 
+This project started as an interview project, which I have then extended and modified as a learning exercise. It (mostly) uses TypeScript Express.js, MySQL with Sequelize ORM, and jest for testing. The database server runs in a docker container. It supports importing a dataset from a json file, and then the api can search, filter, and update data from that dataset.. The test suite currently tests a previous version of the API, written before I added Sequelize ORM to the project. 
 
 ## Setup instructions:
 1. Clone the repository
-2. run the docker command `docker run --name mosaicdb -e MYSQL_USER=user -e MYSQL_PASSWORD=password -e MYSQL_DATABASE=mosaic-api -e MYSQL_RANDOM_ROOT_PASSWORD=yes -p 3306:3306 -d docker.io/library/mariadb:10.2`. This initializes the database in a container.
+2. run the docker command `docker run --name friendly-barnacle -e MYSQL_USER=user -e MYSQL_PASSWORD=password -e MYSQL_DATABASE=friendly-barnacle-api -e MYSQL_RANDOM_ROOT_PASSWORD=yes -p 3306:3306 -d docker.io/library/mariadb:10.2`. This initializes the database in a container.
 2. Navigate to the root directory of the repository
 3. Run the command `npm run seeds`. This will set up the database tables and insert everything in the file `/src/utility/dataset.json` into the database. If you want to add a custom file with the same structure, you can place it in the same directory, and edit the `.env` file with the environment variable `JSON_FILENAME` to be whatever your data file is.
 3. Run the command `npm run start`. The console will output the port the API is listening on (should be 2600).
