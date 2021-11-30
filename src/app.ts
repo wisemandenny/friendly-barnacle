@@ -1,9 +1,13 @@
-const express = require('express');
-const db = require('./utility/database');
-const projectService = require('./services/project.service');
-const { formatDate } = require('./utility/util');
+import express from 'express';
+import helmet from 'helmet';
+import cors from 'cors';
+import db from './utility/database';
+import * as projectService from './services/project.service';
+import formatDate from './utility/util';
 const app = express();
 
+app.use(helmet());
+app.use(cors());
 app.use(express.json());
 app.get('/search', async (req, res) => {
 	try {
@@ -25,7 +29,7 @@ app.get('/findSimilar', async (req, res) => {
 		console.error(e);
 		res.status(500).end();
 	}
-})
+});
 
 app.patch('/update', async (req, res) => {
 	try {
@@ -58,6 +62,6 @@ app.patch('/updateBulk', async (req, res) => {
 	}
 });
 
-const port = process.env.PORT || 2600;
-app.listen(port);
-console.log(`${new Date(Date.now()).toLocaleString()}: API running on port ${port}`);
+const PORT: number = parseInt(process.env.PORT as string, 2600);
+app.listen(PORT);
+console.log(`${new Date(Date.now()).toLocaleString()}: API running on port ${PORT}`);
